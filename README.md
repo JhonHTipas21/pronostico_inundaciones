@@ -6,7 +6,7 @@
 
 En Santiago de Cali, el manejo de las lluvias intensas representa un desafío crítico. El desbordamiento de los drenajes urbanos por precipitaciones súbitas afecta la movilidad, daña la infraestructura y pone en riesgo la vida de los ciudadanos. La respuesta tradicional, basada en acciones reactivas como limpiar rejillas o bombear agua después de la emergencia, ha demostrado ser costosa, tardía e ineficaz.
 
-Este proyecto propone el diseño de un **prototipo de sistema predictivo**, basado en técnicas de **machine learning** e implementado como un **microservicio FastAPI**, capaz de anticipar los caudales (m³/s) con hasta 6 horas de antelación. Este sistema permitirá transformar datos históricos en conocimiento útil para la gestión preventiva del riesgo por inundaciones urbanas.
+Este proyecto propone el diseño de un **prototipo de sistema predictivo**, basado en técnicas de **machine learning** e implementado como un **microservicio FastAPI**, capaz de anticipar los caudales (m³/s) con hasta 6 horas de antelación. Este sistema permitirá transformar datos históricos en conocimiento útil para la gestión preventiva del riesgo por inundaciones urbanas
 
 ---
 
