@@ -244,5 +244,5 @@ agente_caudales/
 
 **Desarrolladores:**  
 Equipo *NeuroNautas* — Universidad Santiago de Cali  
-Proyecto: *Predicción de caudales pluviales urbanos en Cali (2005–2025)*  
+Proyecto: *Predicción de caudales pluviales urbanos en el Sur de Cali (2005–2025)*  
 Frameworks: FastAPI · scikit-learn · pandas · matplotlib
