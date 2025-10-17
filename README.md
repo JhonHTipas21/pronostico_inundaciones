@@ -1,4 +1,4 @@
-# 🌧️ Sistema Predictivo de Caudales Pluviales Urbanos en Santiago de Cali
+# 🌊 Agente_Caudales — Sistema de predicción de caudales pluviales en Cali sector Sur
 
 ---
 
@@ -75,17 +75,174 @@ Un microservicio inteligente diseñado para predecir caudales urbanos de forma a
              └── /retrain → Reentrenamiento con nuevos datos
 
 
-## 📁 Estructura del proyecto
 
-```plaintext
+
+Proyecto basado en **FastAPI + Machine Learning (Lasso/Ridge)** para estimar el caudal (m³/s) de los drenajes urbanos de Cali a partir de datos de lluvia, temperatura e impermeabilidad.
+
+---
+
+## 🚀 1. Requisitos previos
+
+- Python 3.11 o superior  
+- Git (opcional)  
+- Windows PowerShell / Terminal macOS / Linux Shell  
+
+---
+
+## ⚙️ 2. Clonar el repositorio y crear entorno virtual
+
+```bash
+git clone <URL_DEL_REPO>
+cd agente_caudales
+
+python -m venv venv
+# Activar entorno
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # macOS/Linux
+```
+
+---
+
+## 📦 3. Instalar dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 🧾 4. Configuración (.env)
+
+Crea un archivo `.env` en la raíz del proyecto con lo siguiente:
+
+```
+APP_NAME=agente_caudales
+DATA_PATH=app/data/dataset.csv
+MODEL_DIR=app/model
+HORIZON=3
+HORIZON_UNITS=days
+```
+
+---
+
+## ▶️ 5. Ejecutar la API
+
+```bash
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+# o
+python main.py
+```
+
+**URLs útiles**
+- Swagger UI → [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- Health check → [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
+
+---
+
+## 🌐 6. Endpoints principales
+
+### 🧠 `/retrain` (POST)
+Entrena o reentrena el modelo.
+
+```json
+{
+  "csv_path": "E:\\pronostico_inundaciones\\agente_caudales\\app\\data\\dataset.csv",
+  "horizon": 3,
+  "model_type": "lasso"
+}
+```
+
+### 🔮 `/predict` (POST)
+Realiza predicciones del caudal.
+
+```json
+{
+  "horizon": 3,
+  "records": [
+    { "fecha": "2025-05-28T00:00:00", "lluvia_mm": 2.4, "temperatura_C": 24.8, "impermeabilidad_pct": 62.0, "caudal_m3s": 1.02, "estacion": "Canal Cañaveralejo" },
+    { "fecha": "2025-05-29T00:00:00", "lluvia_mm": 0.0, "temperatura_C": 25.1, "impermeabilidad_pct": 62.0, "caudal_m3s": 0.95, "estacion": "Canal Cañaveralejo" }
+  ]
+}
+```
+
+---
+
+## 📊 7. Validación Holdout (R² / RMSE)
+
+Valida el modelo sobre los últimos días del histórico:
+
+```bash
+python eval_holdout.py
+```
+
+Genera:
+- `app/data/processed/holdout_preds.csv`
+- `app/data/processed/holdout_metrics.json`
+
+---
+
+## 📈 8. Gráficas y tablas para el informe
+
+```bash
+python figs_informe.py
+```
+
+Genera:
+- `serie_<ESTACION>.png`
+- `dispersion_holdout.png`
+- `metricas_por_estacion.csv`
+
+---
+
+## 💻 9. Comandos útiles
+
+**Entrenar con CSV**
+```bash
+curl -X POST "http://127.0.0.1:8000/retrain" -H "Content-Type: application/json" -d "{\"csv_path\":\"E:\\\\pronostico_inundaciones\\\\agente_caudales\\\\app\\\\data\\\\dataset.csv\",\"horizon\":3,\"model_type\":\"lasso\"}"
+```
+
+**Validación y gráficas**
+```bash
+python eval_holdout.py
+python figs_informe.py
+```
+
+---
+
+## 🧩 10. Estructura del proyecto
+
+```
 agente_caudales/
+│
 ├── app/
-│   ├── data/                  # Dataset histórico
-│   ├── model/                 # Archivos .pkl del modelo entrenado
-│   ├── schemas/               # Validaciones Pydantic
-│   ├── utils/                 # Funciones de apoyo (opcional)
-│   └── main.py                # Servidor FastAPI
-├── entrenar_modelo.py         # Script para entrenamiento del modelo
-├── requirements.txt           # Dependencias del proyecto
-└── README.md                  # Documentación del proyecto
+│   ├── main.py
+│   ├── config.py
+│   ├── data/
+│   │   └── dataset.csv
+│   ├── model/
+│   │   ├── modelo_regresion.pkl
+│   │   └── escalador.pkl
+│   ├── routes/
+│   │   ├── predict_routes.py
+│   │   └── train_routes.py
+│   ├── schemas/
+│   └── services/
+│       ├── predict_service.py
+│       ├── train_service.py
+│       └── feature_service.py
+│
+├── eval_holdout.py
+├── figs_informe.py
+├── entrenar_modelo.py
+├── requirements.txt
+└── .env
+```
 
+---
+
+## 🧠 11. Créditos
+
+**Desarrolladores:**  
+Equipo *NeuroNautas* — Universidad Santiago de Cali  
+Proyecto: *Predicción de caudales pluviales urbanos en Cali (2005–2025)*  
+Frameworks: FastAPI · scikit-learn · pandas · matplotlib
