@@ -1,0 +1,46 @@
+# 🧠 Entornos virtuales
+venv/
+.env
+.env.*
+
+# ⚙️ Archivos compilados / temporales
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# 🧩 Archivos de configuración locales
+.idea/
+.vscode/
+.DS_Store
+
+# 📦 Dependencias y cache
+*.egg-info/
+*.egg
+*.whl
+pip-wheel-metadata/
+dist/
+build/
+
+# 🧪 Modelos y datasets grandes
+*.pkl
+*.joblib
+*.csv
+*.xlsx
+*.xls
+*.zip
+*.tar.gz
+
+# 📊 Salidas del modelo
+app/data/processed/
+*.png
+*.json
+
+# 🧾 Archivos de logs
+*.log
+
+# 🚀 Archivos de informe temporales
+__temp__/
+temp/
+tmp/
